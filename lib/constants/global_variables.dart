@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+String uri = 'http://${dotenv.env['BASE_URL']}:3000';
 
 class GlobalVariables {
   static const appBarGradient = LinearGradient(
