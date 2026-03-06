@@ -1,8 +1,10 @@
 import 'package:amazon_clone_flutter/constants/global_variables.dart';
 import 'package:amazon_clone_flutter/features/auth/screens/auth_screen.dart';
+import 'package:amazon_clone_flutter/providers/user_provider.dart';
 import 'package:amazon_clone_flutter/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +15,12 @@ void main() async {
     throw Exception('Error loading .env file: $e '); // Cetak kesalahan jika ada
   }
 
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => UserProvider())],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
