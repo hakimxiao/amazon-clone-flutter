@@ -29,10 +29,10 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   void dispose() {
-    super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _nameController.dispose();
+    super.dispose();
   }
 
   void signUpUser() {
@@ -63,7 +63,7 @@ class _AuthScreenState extends State<AuthScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Wellcome',
+                'Welcome',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
               ),
               SizedBox(height: 20),
@@ -128,7 +128,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     ? GlobalVariables.backgroundColor
                     : GlobalVariables.greyBackgroundCOlor,
                 title: Text(
-                  'Signn-in',
+                  'Sign-in',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
 
