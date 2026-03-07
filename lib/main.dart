@@ -1,5 +1,7 @@
 import 'package:amazon_clone_flutter/constants/global_variables.dart';
 import 'package:amazon_clone_flutter/features/auth/screens/auth_screen.dart';
+import 'package:amazon_clone_flutter/features/auth/services/auth_service.dart';
+import 'package:amazon_clone_flutter/features/home/screens/home_screen.dart';
 import 'package:amazon_clone_flutter/providers/user_provider.dart';
 import 'package:amazon_clone_flutter/router.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +41,33 @@ class MyApp extends StatelessWidget {
         ),
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: AuthScreen(),
+      home: const AuthCheckWidget(),
     );
+  }
+}
+
+class AuthCheckWidget extends StatefulWidget {
+  const AuthCheckWidget({super.key});
+
+  @override
+  State<AuthCheckWidget> createState() => _AuthCheckWidgetState();
+}
+
+class _AuthCheckWidgetState extends State<AuthCheckWidget> {
+  final AuthService authService = AuthService();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      authService.getUserData(context);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Provider.of<UserProvider>(context).user.token.isNotEmpty
+        ? const HomeScreen()
+        : const AuthScreen();
   }
 }
