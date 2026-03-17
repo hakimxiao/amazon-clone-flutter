@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const authRouter = require("./src/routes/auth");
+const adminRoute = require("./src/routes/admin");
 require("dotenv").config();
 
 const app = express();
@@ -9,6 +10,7 @@ const MONGODB_URL = process.env.MONGODB_URL;
 
 app.use(express.json());
 app.use(authRouter);
+app.use(adminRoute);
 
 mongoose
   .connect(MONGODB_URL)

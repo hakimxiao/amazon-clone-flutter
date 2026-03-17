@@ -30,7 +30,10 @@ environment:
 dependencies:
   badges: ^3.1.2
   carousel_slider: ^5.1.2
+  cloudinary_public: ^0.23.1
   cupertino_icons: ^1.0.8
+  dotted_border: ^3.1.0
+  file_picker: ^10.3.10
   flutter:
     sdk: flutter
   flutter_dotenv: ^6.0.0

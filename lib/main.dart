@@ -1,5 +1,6 @@
 import 'package:amazon_clone_flutter/common/widgets/bottom_bar.dart';
 import 'package:amazon_clone_flutter/constants/global_variables.dart';
+import 'package:amazon_clone_flutter/features/admin/screens/admin_screen.dart';
 import 'package:amazon_clone_flutter/features/auth/screens/auth_screen.dart';
 import 'package:amazon_clone_flutter/features/auth/services/auth_service.dart';
 // import 'package:amazon_clone_flutter/features/home/screens/home_screen.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Amazone Clone',
       theme: ThemeData(
         scaffoldBackgroundColor: GlobalVariables.greyBackgroundCOlor,
@@ -68,7 +70,9 @@ class _AuthCheckWidgetState extends State<AuthCheckWidget> {
   @override
   Widget build(BuildContext context) {
     return Provider.of<UserProvider>(context).user.token.isNotEmpty
-        ? const BottomBar()
+        ? Provider.of<UserProvider>(context).user.type == 'user'
+              ? BottomBar()
+              : AdminScreen()
         : const AuthScreen();
   }
 }
