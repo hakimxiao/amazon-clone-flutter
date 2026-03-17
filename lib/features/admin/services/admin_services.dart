@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:amazon_clone_flutter/constants/error_handler.dart';
@@ -64,5 +67,36 @@ class AdminServices {
     } catch (err) {
       showSnackBar(context, err.toString());
     }
+  }
+
+  Future<List<Product>> fetchAllProducts(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    List<Product> productList = [];
+
+    try {
+      http.Response response = await http.get(
+        Uri.parse('$uri/admin/get-products'),
+        headers: {
+          'Content-Type': "application/json; charset=UTF-8",
+          "x-auth-token": userProvider.user.token,
+        },
+      );
+
+      httpErrorHandler(
+        response: response,
+        context: context,
+        onSuccess: () async {
+          final List data = jsonDecode(response.body);
+
+          productList = data.map((e) {
+            return Product.fromJson(jsonEncode(e));
+          }).toList();
+        },
+      );
+    } catch (err) {
+      showSnackBar(context, err.toString());
+    }
+
+    return productList;
   }
 }

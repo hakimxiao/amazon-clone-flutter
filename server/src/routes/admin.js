@@ -25,4 +25,13 @@ adminRoute.post("/admin/add-product", admin, async (req, res) => {
   }
 });
 
+adminRoute.get("/admin/get-products", admin, async (req, res) => {
+  try {
+    const products = await Product.find({});
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = adminRoute;
