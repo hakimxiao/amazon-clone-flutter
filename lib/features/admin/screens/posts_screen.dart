@@ -38,8 +38,11 @@ class _PostsScreenState extends State<PostsScreen> {
     );
   }
 
-  void navigateToAddProduct() {
-    Navigator.pushNamed(context, AddProductScreen.routeName);
+  void navigateToAddProduct() async {
+    final res = await Navigator.pushNamed(context, AddProductScreen.routeName);
+    if (res == true) {
+      fetchAllProducts();
+    }
   }
 
   @override
