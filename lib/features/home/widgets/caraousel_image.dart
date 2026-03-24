@@ -11,7 +11,17 @@ class CaraouselImage extends StatelessWidget {
       items: GlobalVariables.carouselImages.map((i) {
         return Builder(
           builder: (BuildContext context) =>
-              Image.network(i, fit: BoxFit.cover, height: 200),
+              Image.network(
+                i,
+                fit: BoxFit.cover,
+                height: 200,
+                errorBuilder: (context, error, stackTrace) {
+                  return const SizedBox(
+                    height: 200,
+                    child: Center(child: Icon(Icons.error_outline, color: Colors.grey)),
+                  );
+                },
+              ),
         );
       }).toList(),
       options: CarouselOptions(viewportFraction: 1, height: 200),

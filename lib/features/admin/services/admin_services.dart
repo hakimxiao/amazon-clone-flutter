@@ -61,7 +61,7 @@ class AdminServices {
         context: context,
         onSuccess: () async {
           showSnackBar(context, 'Product added successfully!');
-          Navigator.pop(context);
+          Navigator.pop(context, true);
         },
       );
     } catch (err) {
