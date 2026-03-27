@@ -1,6 +1,7 @@
 import 'package:amazon_clone_flutter/common/widgets/loader.dart';
 import 'package:amazon_clone_flutter/constants/global_variables.dart';
 import 'package:amazon_clone_flutter/features/home/widgets/address_box.dart';
+import 'package:amazon_clone_flutter/features/product_detail/screens/product_detail_screen.dart';
 import 'package:amazon_clone_flutter/features/search/services/search_services.dart';
 import 'package:amazon_clone_flutter/features/search/widgets/search_product.dart';
 import 'package:amazon_clone_flutter/models/product.dart';
@@ -117,7 +118,14 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: ListView.builder(
                     itemCount: products!.length,
                     itemBuilder: (context, index) {
-                      return SearchProduct(product: products![index]);
+                      return GestureDetector(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          ProductDetailScreen.routeName,
+                          arguments: products![index],
+                        ),
+                        child: SearchProduct(product: products![index]),
+                      );
                     },
                   ),
                 ),
