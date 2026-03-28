@@ -2,6 +2,7 @@ import 'package:amazon_clone_flutter/common/utils/currency_formatter.dart';
 import 'package:amazon_clone_flutter/common/widgets/custom_button.dart';
 import 'package:amazon_clone_flutter/common/widgets/stars.dart';
 import 'package:amazon_clone_flutter/constants/global_variables.dart';
+import 'package:amazon_clone_flutter/features/product_detail/services/product_detail_services.dart';
 import 'package:amazon_clone_flutter/features/search/screens/search_screen.dart';
 import 'package:amazon_clone_flutter/models/product.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -20,6 +21,8 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  final ProductDetailServices productDetailServices = ProductDetailServices();
+
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
@@ -199,7 +202,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               itemPadding: EdgeInsets.symmetric(horizontal: 4),
               itemBuilder: (context, _) =>
                   Icon(Icons.star, color: GlobalVariables.secondaryColor),
-              onRatingUpdate: (rating) {},
+              onRatingUpdate: (rating) {
+                productDetailServices.rateProduct(
+                  context: context,
+                  product: widget.product,
+                  rating: rating,
+                );
+              },
             ),
           ],
         ),
