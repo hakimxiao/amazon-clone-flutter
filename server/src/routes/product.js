@@ -2,7 +2,7 @@ const express = require("express");
 
 const productRouter = express.Router();
 const auth = require("../middlewares/auth");
-const Product = require("../models/product");
+const { Product } = require("../models/product");
 
 // /api/products?category=Essentials = req.query.category
 // /api/products?makanan=Bakso = req.query.makanan
