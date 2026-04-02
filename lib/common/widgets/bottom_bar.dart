@@ -1,8 +1,11 @@
 import 'package:amazon_clone_flutter/constants/global_variables.dart';
 import 'package:amazon_clone_flutter/features/account/screens/account_screen.dart';
+import 'package:amazon_clone_flutter/features/cart/screens/cart_screen.dart';
 import 'package:amazon_clone_flutter/features/home/screens/home_screen.dart';
+import 'package:amazon_clone_flutter/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:provider/provider.dart';
 
 class BottomBar extends StatefulWidget {
   static const String routeName = '/actual-home';
@@ -20,7 +23,7 @@ class _BottomBarState extends State<BottomBar> {
 
   List<Widget> pages = [
     const HomeScreen(),
-    const Center(child: Text('Cart Page')),
+    const CartScreen(),
     const AccountScreen(),
   ];
 
@@ -32,6 +35,8 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    final userCartLen = context.watch<UserProvider>().user.cart.length;
+
     return Scaffold(
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
@@ -46,7 +51,6 @@ class _BottomBarState extends State<BottomBar> {
           BottomNavigationBarItem(
             icon: Container(
               width: bottomBarWidth,
-
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
@@ -57,15 +61,8 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
-              child: badges.Badge(
-                badgeStyle: badges.BadgeStyle(
-                  elevation: 0,
-                  badgeColor: Colors.white,
-                ),
-                badgeContent: const Text('2'),
 
-                child: Icon(Icons.home_outlined),
-              ),
+              child: Icon(Icons.home_outlined),
             ),
             label: '',
           ),
@@ -83,7 +80,15 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
-              child: Icon(Icons.shopping_cart_outlined),
+              child: badges.Badge(
+                badgeStyle: badges.BadgeStyle(
+                  elevation: 0,
+                  badgeColor: Colors.white,
+                ),
+                badgeContent: Text(userCartLen.toString()),
+
+                child: Icon(Icons.shopping_cart_outlined),
+              ),
             ),
             label: '',
           ),
@@ -101,6 +106,7 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
+
               child: Icon(Icons.person_outline),
             ),
             label: '',

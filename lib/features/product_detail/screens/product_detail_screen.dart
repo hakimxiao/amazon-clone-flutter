@@ -51,6 +51,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
 
+  void addToCart() {
+    productDetailServices.addToCart(context: context, product: widget.product);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -208,7 +212,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 text: 'Add To Cart',
                 color: Color.fromRGBO(254, 216, 19, 1),
                 textColor: Colors.black,
-                onTap: () {},
+                onTap: addToCart,
               ),
             ),
             SizedBox(height: 10),
