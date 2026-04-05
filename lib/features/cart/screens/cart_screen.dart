@@ -1,5 +1,6 @@
 import 'package:amazon_clone_flutter/common/widgets/custom_button.dart';
 import 'package:amazon_clone_flutter/constants/global_variables.dart';
+import 'package:amazon_clone_flutter/features/address/screens/address_screen.dart';
 import 'package:amazon_clone_flutter/features/cart/widgets/cart_product.dart';
 import 'package:amazon_clone_flutter/features/cart/widgets/cart_subtotal.dart';
 import 'package:amazon_clone_flutter/features/home/widgets/address_box.dart';
@@ -20,9 +21,22 @@ class _CartScreenState extends State<CartScreen> {
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
 
+  void navigateToAddressScreen(int sum) {
+    Navigator.pushNamed(
+      context,
+      AddressScreen.routeName,
+      arguments: sum.toString(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().user;
+
+    int sum = 0;
+    user.cart
+        .map((e) => sum += e['quantity'] * e['product']['price'] as int)
+        .toList();
 
     return Scaffold(
       appBar: PreferredSize(
@@ -100,7 +114,7 @@ class _CartScreenState extends State<CartScreen> {
                 text: 'Proceed to Buy (${user.cart.length} Items)',
                 color: Colors.yellow[600],
                 textColor: Colors.black,
-                onTap: () {},
+                onTap: () => navigateToAddressScreen(sum),
               ),
             ),
             SizedBox(height: 15),
