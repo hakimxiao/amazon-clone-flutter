@@ -70,8 +70,10 @@ class SearchProduct extends StatelessWidget {
                     width: 235,
                     padding: EdgeInsets.only(left: 10, top: 5),
                     child: Text(
-                      'In Stock',
-                      style: TextStyle(color: Colors.teal),
+                      product.quantity == 0 ? 'Out of Stock' : 'In Stock',
+                      style: TextStyle(
+                        color: product.quantity == 0 ? Colors.red : Colors.teal,
+                      ),
                       maxLines: 2,
                     ),
                   ),
