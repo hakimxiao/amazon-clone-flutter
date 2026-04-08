@@ -59,8 +59,8 @@ class _AddressScreenState extends State<AddressScreen> {
         "merchantName": "Test"
       },
       "transactionInfo": {
-        "countryCode": "US",
-        "currencyCode": "USD"
+        "countryCode": "ID",
+        "currencyCode": "IDR"
       }
     }
   }
@@ -72,8 +72,8 @@ class _AddressScreenState extends State<AddressScreen> {
     "displayName": "Sam's Fish",
     "merchantCapabilities": ["3DS", "debit", "credit"],
     "supportedNetworks": ["amex", "visa", "discover", "masterCard"],
-    "countryCode": "US",
-    "currencyCode": "USD",
+    "countryCode": "ID",
+    "currencyCode": "IDR",
     "requiredBillingContactFields": ["emailAddress", "name", "phoneNumber", "postalAddress"],
     "requiredShippingContactFields": [],
     "shippingMethods": [

@@ -12,8 +12,12 @@ userRouter.post("/api/add-to-cart", auth, async (req, res) => {
 
     const product = await Product.findById(id);
 
+    if (product.quantity <= 0) {
+      return res.status(400).json({ msg: "Product is out of stock!" });
+    }
+
     let user = await User.findById(req.user);
-    if (user.length == 0) {
+    if (user.cart.length == 0) {
       user.cart.push({ product, quantity: 1 });
     } else {
       let isProductFound = false;
@@ -83,7 +87,7 @@ userRouter.post("/api/save-user-address", auth, async (req, res) => {
 
 userRouter.post("/api/order", auth, async (req, res) => {
   try {
-    const { cart, total, address } = req.body;
+    const { cart, totalPrice, address } = req.body;
     let products = [];
 
     for (let i = 0; i < cart.length; i++) {
@@ -115,6 +119,16 @@ userRouter.post("/api/order", auth, async (req, res) => {
     order = await order.save();
 
     res.json(order);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+userRouter.get("/api/orders/me", auth, async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.user });
+
+    res.json(orders);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

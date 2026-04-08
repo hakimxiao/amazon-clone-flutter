@@ -191,6 +191,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
             Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Text(
+                widget.product.quantity == 0 ? 'Out of Stock' : 'In Stock',
+                style: TextStyle(
+                  color: widget.product.quantity == 0 ? Colors.red : Colors.teal,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(widget.product.description),
             ),
@@ -202,7 +212,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 text: 'Buy Now',
                 color: Colors.orange,
                 textColor: Colors.white,
-                onTap: () {},
+                onTap: widget.product.quantity == 0 
+                    ? () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Product is out of stock!')),
+                        );
+                      }
+                    : () {},
               ),
             ),
             SizedBox(height: 10),
@@ -212,7 +228,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 text: 'Add To Cart',
                 color: Color.fromRGBO(254, 216, 19, 1),
                 textColor: Colors.black,
-                onTap: addToCart,
+                onTap: widget.product.quantity == 0
+                    ? () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Product is out of stock!')),
+                        );
+                      }
+                    : addToCart,
               ),
             ),
             SizedBox(height: 10),
