@@ -1,4 +1,5 @@
 import 'package:amazon_clone_flutter/constants/global_variables.dart';
+import 'package:amazon_clone_flutter/features/admin/screens/orders_screen.dart';
 import 'package:amazon_clone_flutter/features/admin/screens/posts_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
@@ -17,7 +18,7 @@ class _AdminScreenState extends State<AdminScreen> {
 
   List<Widget> pages = [
     PostsScreen(),
-    const Center(child: Text('Orders Page')),
+    OrdersScreen(),
     const Center(child: Text('Analytics Page')),
   ];
 
