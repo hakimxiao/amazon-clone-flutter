@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:amazon_clone_flutter/constants/error_handler.dart';
 import 'package:amazon_clone_flutter/constants/global_variables.dart';
 import 'package:amazon_clone_flutter/constants/utils.dart';
+import 'package:amazon_clone_flutter/models/order.dart';
 import 'package:amazon_clone_flutter/models/product.dart';
 import 'package:amazon_clone_flutter/providers/user_provider.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
@@ -115,6 +116,67 @@ class AdminServices {
           "x-auth-token": userProvider.user.token,
         },
         body: jsonEncode({'id': product.id}),
+      );
+
+      httpErrorHandler(
+        response: res,
+        context: context,
+        onSuccess: () async {
+          onSuccess();
+        },
+      );
+    } catch (err) {
+      showSnackBar(context, err.toString());
+    }
+  }
+
+  Future<List<Order>> fetchAllOrders(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    List<Order> ordersList = [];
+
+    try {
+      http.Response response = await http.get(
+        Uri.parse('$uri/admin/get-orders'),
+        headers: {
+          'Content-Type': "application/json; charset=UTF-8",
+          "x-auth-token": userProvider.user.token,
+        },
+      );
+
+      httpErrorHandler(
+        response: response,
+        context: context,
+        onSuccess: () async {
+          final List data = jsonDecode(response.body);
+
+          ordersList = data.map((e) {
+            return Order.fromJson(jsonEncode(e));
+          }).toList();
+        },
+      );
+    } catch (err) {
+      showSnackBar(context, err.toString());
+    }
+
+    return ordersList;
+  }
+
+  void changeOrderStatus({
+    required BuildContext context,
+    required int status,
+    required Order order,
+    required VoidCallback onSuccess,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$uri/admin/change-order-status'),
+        headers: {
+          'Content-Type': "application/json; charset=UTF-8",
+          "x-auth-token": userProvider.user.token,
+        },
+        body: jsonEncode({'id': order.id, 'status': status}),
       );
 
       httpErrorHandler(

@@ -1,3 +1,4 @@
+import 'package:amazon_clone_flutter/common/utils/currency_formatter.dart';
 import 'package:amazon_clone_flutter/common/widgets/loader.dart';
 import 'package:amazon_clone_flutter/features/home/services/home_services.dart';
 import 'package:amazon_clone_flutter/features/product_detail/screens/product_detail_screen.dart';
@@ -53,29 +54,35 @@ class _DealOfDayState extends State<DealOfDay> {
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
-                Image.network(
-                  product!.images[0],
-                  height: 235,
-                  fit: BoxFit.fitHeight,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const SizedBox(
-                      height: 235,
-                      child: Center(
-                        child: Icon(Icons.error_outline, color: Colors.grey),
-                      ),
-                    );
-                  },
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  child: Image.network(
+                    product!.images[0],
+                    height: 235,
+                    fit: BoxFit.fitHeight,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const SizedBox(
+                        height: 235,
+                        child: Center(
+                          child: Icon(Icons.error_outline, color: Colors.grey),
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 15),
                   alignment: Alignment.topLeft,
-                  child: Text('\$100', style: TextStyle(fontSize: 18)),
+                  child: Text(
+                    CurrencyFormatter.formatRupiah(product!.price),
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.only(left: 15, top: 5, right: 40),
                   child: Text(
-                    'Hakim',
+                    product!.name,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
